@@ -5,13 +5,13 @@ FROM azul/zulu-openjdk:8 as builder
 MAINTAINER Netflix OSS <conductor@netflix.com>
 
 RUN apt-get update
-RUN apt-get install -y git gradle
+RUN apt-get install -y git
 
 RUN git clone --branch integer_input_fix https://github.com/PDOK/conductor /src
 
 WORKDIR /src
 # override the default version logic with an specific version and build it
-RUN gradle -x test build -Prelease.version=$(git describe --tags)
+RUN ./gradlew -x test build -Prelease.version=$(git describe --tags)
 
 # now create a new container with just the artifacts
 FROM java:8-jre-alpine
