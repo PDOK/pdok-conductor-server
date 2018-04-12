@@ -7,14 +7,11 @@ MAINTAINER Netflix OSS <conductor@netflix.com>
 RUN apt-get update
 RUN apt-get install -y git gradle
 
-ENV PDOK_CONDUCTOR_VERSION 1.8.2-rc4
-LABEL version="$PDOK_CONDUCTOR_VERSION"
-# get the source from git of an specific version
-RUN git clone --branch v$PDOK_CONDUCTOR_VERSION https://github.com/Netflix/conductor /src
+RUN git clone --branch integer_input_fix https://github.com/PDOK/conductor /src
 
 WORKDIR /src
 # override the default version logic with an specific version and build it
-RUN gradle -x test build -Prelease.version=$PDOK_CONDUCTOR_VERSION
+RUN gradle -x test build -Prelease.version=$(git describe --tags)
 
 # now create a new container with just the artifacts
 FROM java:8-jre-alpine
