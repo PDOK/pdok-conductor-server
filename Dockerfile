@@ -7,7 +7,7 @@ MAINTAINER Netflix OSS <conductor@netflix.com>
 RUN apt-get update
 RUN apt-get install -y git
 
-RUN git clone --branch integer_input_fix https://github.com/PDOK/conductor /src
+RUN git clone --branch pdok-build https://github.com/PDOK/conductor /src
 
 WORKDIR /src
 # override the default version logic with an specific version and build it
